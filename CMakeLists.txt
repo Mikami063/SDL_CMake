@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.10)
+project(SDL_App)
+
+# Specify C++ Standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIR})
+
+# Find all the source and header files
+file(GLOB PROJECT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/SDL_Cmake/*.cpp")
+file(GLOB PROJECT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/SDL_Cmake/*.h")
+file(GLOB ECS_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/SDL_Cmake/ECS/*.h")
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${ECS_SOURCES})
+target_link_libraries(${PROJECT_NAME} SDL2::SDL2 SDL2_image::SDL2_image)
+
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+set_target_properties( ${PROJECT_NAME} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+# Copy assets directory to build directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/SDL_Cmake/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
