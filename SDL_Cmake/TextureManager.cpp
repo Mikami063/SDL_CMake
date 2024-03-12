@@ -21,5 +21,6 @@ SDL_Texture* TextureManager::LoadTexture(const char *fileName){
 }
 
 void TextureManager::Draw(SDL_Texture *tex, const SDL_Rect* src, const SDL_Rect* dest){
+    //SDL_Log("Draw in TexMan: %d (srcRect.x: )", src->x);
     SDL_RenderCopy(Game::renderer, tex, src, dest);
 }

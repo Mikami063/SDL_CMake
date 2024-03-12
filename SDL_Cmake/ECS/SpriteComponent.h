@@ -16,10 +16,20 @@ private:
     SDL_Texture* texture;
     SDL_Rect srcRect,destRect;
     //bool active=true;
+
+    bool animated=false;
+    int frames=0;
+    int speed=100;//delay time between frames
     
 public:
     SpriteComponent()=default;
     SpriteComponent(const char* path){
+        setTexture(path);
+    }
+    SpriteComponent(const char* path, int nFrames, int mSpeed){
+        animated=true;
+        frames=nFrames;
+        speed=mSpeed;
         setTexture(path);
     }
     ~SpriteComponent(){
@@ -40,12 +50,24 @@ public:
     }
     void update() override{
         //destRect.x=(int)transform->position.x;
+
+        if(animated){
+            srcRect.x= srcRect.w * static_cast<int>((SDL_GetTicks()/speed)%frames);
+            //srcRect.x= srcRect.w * 6;
+            //SDL_Log("Animated srcRect.x: %d (srcRect.x: )", srcRect.x);
+        }
+
         destRect.x=static_cast<int>(transform->position.x);//more explicit, study
         destRect.y=static_cast<int>(transform->position.y);
         destRect.w=transform->width * transform->scale;
+        //SDL_Log("transform->width: %d",transform->width);
+        //SDL_Log("transform->scale: %d",transform->scale);
+        //SDL_Log("the width: %d",destRect.w);
         destRect.h=transform->height * transform->scale;
+        
     }
     void draw() override{
-        TextureManager::Draw(texture, nullptr, &destRect);
+        TextureManager::Draw(texture, &srcRect, &destRect);
+        //SDL_Log("Draw in sprite: %d (srcRect.x: )", srcRect.x);
     }
 };

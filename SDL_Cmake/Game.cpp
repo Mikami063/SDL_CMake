@@ -34,6 +34,12 @@ auto& wall(manager.addEntity());//will study later
 
 //auto& tile0(manager.addEntity());
 
+enum groupLabels: std::size_t{
+    groupMap,
+    groupPlayers,
+    groupEnemies,
+    groupColliders
+};
 
 Game::Game(){
     
@@ -83,14 +89,16 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     
     //newPlayer.addComponent<PositionComponent>();
     //newPlayer.getComponent<PositionComponent>().setPos(500,500);
-    player.addComponent<TransformComponent>(2);//M4
-    player.addComponent<SpriteComponent>("assets/woman-idle/woman-idle-1.png");//M5
+    player.addComponent<TransformComponent>(0.0f,0.0f,46,37,2);//M4
+    player.addComponent<SpriteComponent>("assets/woman-idle/woman-idle.png",7,100);//M5
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
+    player.addGroup(groupPlayers);
     
     wall.addComponent<TransformComponent>(300.0f,300.0f,300,20,1);
     wall.addComponent<SpriteComponent>("assets/dirt.png");
     wall.addComponent<ColliderComponent>("wall");
+    wall.addGroup(groupMap);
 }
 void Game::handleEvents(){
     
@@ -136,6 +144,11 @@ void Game::update(){
      */
     //std::cout<<player.getComponent<TransformComponent>().x()<<","<<player.getComponent<TransformComponent>().y()<<std::endl;
 }
+
+auto& tiles(manager.getGroup(groupMap));// the type is std::vector<Entity*>&
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
+
 void Game::render(){
     SDL_RenderClear(renderer);
     /*
@@ -144,7 +157,16 @@ void Game::render(){
     //map->DrawMap();//tmp disable map
     //player->Render();
     //enemy->Render();//GO5
-    manager.draw();//M8
+    //manager.draw();//M8
+    for(auto& t : tiles){
+        t->draw();
+    }
+    for(auto& p : players){
+        p->draw();
+    }
+    for(auto& e : enemies){
+        e->draw();
+    }
     SDL_RenderPresent(renderer);
 }
 void Game::clean(){
@@ -157,4 +179,5 @@ void Game::clean(){
 void Game::AddTile(int id, int x, int y){
     auto& tile(manager.addEntity());
     tile.addComponent<TileComponent>(x,y,32,32,id);
+    tile.addGroup(groupMap);
 }
