@@ -90,7 +90,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     //newPlayer.addComponent<PositionComponent>();
     //newPlayer.getComponent<PositionComponent>().setPos(500,500);
     player.addComponent<TransformComponent>(0.0f,0.0f,46,37,2);//M4
-    player.addComponent<SpriteComponent>("assets/woman-idle/woman-idle.png",7,100);//M5
+    player.addComponent<SpriteComponent>("assets/woman.png",true);//M5
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);

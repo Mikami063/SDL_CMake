@@ -24,10 +24,10 @@ def combine_images_horizontally(image_paths):
 
 # Example usage
 base_folder_path='SDL_Cmake/assets/'
-length=7
+length=6
 image_paths=[]
 for i in range(length):
-    image_paths.append(base_folder_path+"woman-idle/woman-idle-"+str(i+1)+".png")
+    image_paths.append(base_folder_path+"woman-walk/woman-walk-"+str(i+1)+".png")
 
 combined_image = combine_images_horizontally(image_paths)
 if combined_image:
