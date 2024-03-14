@@ -1,4 +1,10 @@
-Welcome to Cmake Version of SDL_GameEngine
+# Welcome to Cmake Version of SDL_GameEngine
+
+## find a good website explain the ECS(entity_component_system) in detail
+
+https://austinmorlan.com/posts/entity_component_system/#What%20Is%20An%20Ecs?
+
+## general
 
 I'm just tired of poor c++ support on Xcode.
 
