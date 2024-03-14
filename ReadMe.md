@@ -18,7 +18,9 @@ and >CMake: Debug
 
 build for MacOS, not sure of other system, good luck get it to work
 
-This repo is for me to follow along the tutorial of a C++ GameEngine series, to ultimately understand basic structure of a GameEngine, not a framework for other people to work on, thus no support
+This repo is for me to follow along the tutorial of a C++ GameEngine series, to ultimately understand basic structure of a GameEngine, not a framework for other people to work on, thus no support, tutorial link in below if you want to also try it
+
+https://www.youtube.com/watch?v=QQzAHcojEKg&list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wSLrx&index=1
 
 This readme is a reminder note for myself, I know I will definitely forget how to build my project, 100%
 
