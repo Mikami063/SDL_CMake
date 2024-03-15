@@ -24,4 +24,8 @@ https://www.youtube.com/watch?v=QQzAHcojEKg&list=PLhfAbcv9cehhkG7ZQK0nfIGJC_C-wS
 
 This readme is a reminder note for myself, I know I will definitely forget how to build my project, 100%
 
+## Build
+
+two build folder: /build for VSCode and /Xbuild for Xcode
+
 Cheers
