@@ -88,7 +88,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
             mapFile.get(c);//this is to read the second character,can't delete
             srcX=atoi(&c)*32;
             //Game::AddTile(atoi(&tile), x*32, y*32);
-            Game::AddTile(srcX,srcY,x*32,y*32);
+            Game::AddTile(srcX,srcY,x*64,y*64);
             std::cout<<"location: "<<y<<":"<<x<<" [tile]: "<<srcY<<":"<<srcX<<std::endl;
             mapFile.ignore();
         }

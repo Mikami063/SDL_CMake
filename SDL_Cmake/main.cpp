@@ -11,7 +11,7 @@ int main() {
     int frameTime;
     
     game=new Game();
-    game->init("GameEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+    game->init("犬神エンジェイン", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
     while(game->running()){
         frameStart=SDL_GetTicks();
         

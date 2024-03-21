@@ -140,7 +140,7 @@ void Game::update(){
     
     manager.refresh();//M6
     manager.update();//M7
-
+    
     camera.x=player.getComponent<TransformComponent>().position.x- this->width/2;
     camera.y=player.getComponent<TransformComponent>().position.y- this->height/2;
 
@@ -156,6 +156,7 @@ void Game::update(){
     if(camera.y>camera.h){
         camera.y=camera.h;
     }
+    
     /*
     temp disable
     for (auto cc: colliders){//so the cc is a reference? i mean it don't copy data right?
