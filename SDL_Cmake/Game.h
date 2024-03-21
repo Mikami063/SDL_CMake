@@ -33,14 +33,18 @@ public:
         return isRunning;
     }
     
-    static void AddTile(int id, int x, int y);
+    static void AddTile(int srcX, int srcY, int xpos, int ypos);
     static SDL_Renderer* renderer;
     static SDL_Event event;//why don't use pointer here
     static std::vector<ColliderComponent*> colliders;
+    static SDL_Rect camera;
+
 private:
     int cnt=0;
     bool isRunning;
     SDL_Window* window;
+    int width;
+    int height;
     //SDL_Renderer* renderer;
 };
 

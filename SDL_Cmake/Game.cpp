@@ -26,11 +26,15 @@ SDL_Rect srcR, destR;
 SDL_Renderer* Game::renderer=nullptr;
 SDL_Event Game::event;
 
+SDL_Rect Game::camera;
+
 std::vector<ColliderComponent*> Game::colliders;//why should we declare things here, to make it global on this file? study
 
 Manager manager;//M2
 auto& player(manager.addEntity());//M3
 auto& wall(manager.addEntity());//will study later
+
+const char* mapfile= "assets/terrain_ss.png";
 
 //auto& tile0(manager.addEntity());
 
@@ -40,6 +44,11 @@ enum groupLabels: std::size_t{
     groupEnemies,
     groupColliders
 };
+
+auto& tiles(manager.getGroup(groupMap));// the type is std::vector<Entity*>&
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
+
 
 Game::Game(){
     
@@ -81,8 +90,13 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     //map=new Map();
     
     //ECS system
+    this->width=width;
+    this->height=height;
+
+    camera={0,0,width,height};
     
-    Map::LoadMap("assets/lv1.txt", 16, 16);
+    //Map::LoadMap("assets/lv1.txt", 16, 16);
+    Map::LoadMap("assets/map.map", 25, 20);
     
     //tile0.addComponent<TileComponent>(200,200,32,32,2);//T here only accept Components in Components.h, should be, study, and TArgs don't provide auto complete based on type, issue
     //tile0.addComponent<ColliderComponent>("grass");
@@ -94,11 +108,12 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
-    
+    /*
     wall.addComponent<TransformComponent>(300.0f,300.0f,300,20,1);
     wall.addComponent<SpriteComponent>("assets/dirt.png");
     wall.addComponent<ColliderComponent>("wall");
     wall.addGroup(groupMap);
+    */
 }
 void Game::handleEvents(){
     
@@ -125,12 +140,30 @@ void Game::update(){
     
     manager.refresh();//M6
     manager.update();//M7
-    
+
+    camera.x=player.getComponent<TransformComponent>().position.x- this->width/2;
+    camera.y=player.getComponent<TransformComponent>().position.y- this->height/2;
+
+    if(camera.x<0){
+        camera.x=0;
+    }
+    if(camera.x>camera.w){
+        camera.x=0;
+    }
+    if(camera.y<0){
+        camera.y=0;
+    }
+    if(camera.y>camera.h){
+        camera.y=camera.h;
+    }
+    /*
+    temp disable
     for (auto cc: colliders){//so the cc is a reference? i mean it don't copy data right?
         if(Collision::AABB(player.getComponent<ColliderComponent>(), *cc)){//why deref cc and why not player.getComponent<ColliderComponent>.collider?, ok the ColliderComponent is the input type
             std::cout<< "Something Hits!"<< player.getComponent<ColliderComponent>().tag<< " -> Hits -> "<<cc->tag <<std::endl;
         }
     }
+    */
     /*
     if(Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider)){
         player.getComponent<TransformComponent>().velocity*-1;//scale to -1
@@ -145,9 +178,6 @@ void Game::update(){
     //std::cout<<player.getComponent<TransformComponent>().x()<<","<<player.getComponent<TransformComponent>().y()<<std::endl;
 }
 
-auto& tiles(manager.getGroup(groupMap));// the type is std::vector<Entity*>&
-auto& players(manager.getGroup(groupPlayers));
-auto& enemies(manager.getGroup(groupEnemies));
 
 void Game::render(){
     SDL_RenderClear(renderer);
@@ -176,8 +206,8 @@ void Game::clean(){
     std::cout<<"Game cleared"<<std::endl;
 }
 
-void Game::AddTile(int id, int x, int y){
+void Game::AddTile(int srcX, int srcY, int xpos, int ypos){
     auto& tile(manager.addEntity());
-    tile.addComponent<TileComponent>(x,y,32,32,id);
+    tile.addComponent<TileComponent>(srcX,srcY,xpos,ypos,mapfile);
     tile.addGroup(groupMap);
 }

@@ -61,7 +61,7 @@ void printCurrentWorkingDirAndTree() {
 }
 
 void Map::LoadMap(std::string path, int sizeX, int sizeY){
-    char tile;
+    char c;
     
     //std::string path=PathToolMacOS::getResourcePath(pathArg);
     
@@ -69,10 +69,13 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
     if (!fileExists(path)) {
             std::cerr << "File does not exist: " << path << std::endl;
             return;
-        }
+    }
     
     std::fstream mapFile;
     mapFile.open(path);
+
+    int srcX, srcY;
+
     if (!mapFile) {
             std::cerr << "Failed to open map file: " << path << std::endl;
             return; // Exit the function if file opening fails
@@ -80,9 +83,12 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
     
     for(int y=0;y<sizeY;y++){
         for(int x=0;x<sizeX;x++){
-            mapFile.get(tile);//how this work, why can get(tile)
-            Game::AddTile(atoi(&tile), x*32, y*32);
-            std::cout<<"atoi: "<<atoi(&tile)<<" [tile]: "<<&tile<<std::endl;
+            mapFile.get(c);//how this work, why can get(tile)
+            srcY=atoi(&c)*32;
+            srcX=atoi(&c)*32;
+            //Game::AddTile(atoi(&tile), x*32, y*32);
+            Game::AddTile(srcX,srcY,x*32,y*32);
+            //std::cout<<"atoi: "<<atoi(&tile)<<" [tile]: "<<&tile<<std::endl;
             mapFile.ignore();
         }
     }

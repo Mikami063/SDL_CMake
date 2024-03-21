@@ -78,7 +78,7 @@ public:
         groupBitSet[mGroup]=false;
     }
     
-    template <typename T> bool hasComponent() const{//why template?
+    template <typename T> bool hasComponent() const{
         return componentBitSet[getComponentTypeID<T>()];//will study that, from youtube lesson 11 author comment
     }
     
