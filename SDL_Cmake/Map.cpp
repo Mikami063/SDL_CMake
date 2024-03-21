@@ -85,10 +85,11 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
         for(int x=0;x<sizeX;x++){
             mapFile.get(c);//how this work, why can get(tile)
             srcY=atoi(&c)*32;
+            mapFile.get(c);//this is to read the second character,can't delete
             srcX=atoi(&c)*32;
             //Game::AddTile(atoi(&tile), x*32, y*32);
             Game::AddTile(srcX,srcY,x*32,y*32);
-            //std::cout<<"atoi: "<<atoi(&tile)<<" [tile]: "<<&tile<<std::endl;
+            std::cout<<"location: "<<y<<":"<<x<<" [tile]: "<<srcY<<":"<<srcX<<std::endl;
             mapFile.ignore();
         }
     }
