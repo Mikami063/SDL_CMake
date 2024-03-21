@@ -148,7 +148,7 @@ void Game::update(){
         camera.x=0;
     }
     if(camera.x>camera.w){
-        camera.x=0;
+        camera.x=camera.w;
     }
     if(camera.y<0){
         camera.y=0;

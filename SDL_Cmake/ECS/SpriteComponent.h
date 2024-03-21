@@ -77,8 +77,9 @@ public:
 
         srcRect.y= animIndex * transform->height;
 
-        destRect.x=static_cast<int>(transform->position.x);//more explicit, study
-        destRect.y=static_cast<int>(transform->position.y);
+        destRect.x=static_cast<int>(transform->position.x)-Game::camera.x;//more explicit, study
+        //and also interesting camera location value fix for player go ahead of the camera, likely only the sprite part is ahead, study
+        destRect.y=static_cast<int>(transform->position.y)-Game::camera.y;
         destRect.w=transform->width * transform->scale;
         //SDL_Log("transform->width: %d",transform->width);
         //SDL_Log("transform->scale: %d",transform->scale);
