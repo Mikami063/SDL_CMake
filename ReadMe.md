@@ -28,4 +28,15 @@ This readme is a reminder note for myself, I know I will definitely forget how t
 
 two build folder: /build for VSCode and /Xbuild for Xcode
 
+```
+mkdir build
+cd build
+cmake ..
+```
+```
+mkdir Xbuild
+cd Xbuild
+cmake -G Xcode ..
+```
+
 Cheers
